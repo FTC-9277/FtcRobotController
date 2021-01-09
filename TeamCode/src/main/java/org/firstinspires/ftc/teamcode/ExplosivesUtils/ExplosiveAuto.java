@@ -13,13 +13,19 @@ public abstract class ExplosiveAuto extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
+        log("Creating robot...");
         createRobot();
+        log("Initializing...");
         initialize();
+        log("-- Awaiting start --");
         waitForStart();
+        log("Starting...");
         begin();
 
         // Wait until program has run for the minimum millis until exiting
-        while(!hasRunForMinimumTime()) {}
+        while(!hasRunForMinimumTime()) {
+            log("Program execution has ended before the minimum time required to run this program (" + MINIMUM_RUNNING_MILLIS + " millis) had passed. Waiting to end...");
+        }
     }
 
     /*
@@ -37,7 +43,7 @@ public abstract class ExplosiveAuto extends LinearOpMode {
     /*
         The method called once the Start button has been pressed and the 30 second Autonomous period has begun.
      */
-    protected abstract void begin();
+    protected abstract void begin() throws InterruptedException;
 
 
     public boolean hasRunForMinimumTime() {
@@ -52,6 +58,11 @@ public abstract class ExplosiveAuto extends LinearOpMode {
             e.printStackTrace();
             showError("Could not sleep Thread!");
         }
+    }
+
+    public void log(String message) {
+        telemetry.addLine(message);
+        telemetry.update();
     }
 
     /*

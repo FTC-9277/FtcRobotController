@@ -9,8 +9,13 @@ public abstract class ExplosiveTele extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
+        log("Creating robot...");
         createRobot();
+        log("Initializing...");
         initialize();
+        log("-- Awaiting start --");
+        waitForStart();
+        log("Starting...");
         while(opModeIsActive()) { looping(); }
     }
 
@@ -39,6 +44,11 @@ public abstract class ExplosiveTele extends LinearOpMode {
             e.printStackTrace();
             showError("Could not sleep Thread!");
         }
+    }
+
+    public void log(String message) {
+        telemetry.addLine(message);
+        telemetry.update();
     }
 
     /*

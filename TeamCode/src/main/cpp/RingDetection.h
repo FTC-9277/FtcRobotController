@@ -12,7 +12,7 @@ class RingDetection {
 
     jint sample(JNIEnv *env, jobject ojb, jintArray pixels, jint width, jint height) {
 
-            
+
 
     }
 
