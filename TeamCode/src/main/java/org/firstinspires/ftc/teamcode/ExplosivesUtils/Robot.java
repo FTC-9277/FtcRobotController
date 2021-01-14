@@ -5,9 +5,11 @@ import android.graphics.drawable.GradientDrawable;
 import android.hardware.Sensor;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.PIDCoefficients;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
@@ -23,14 +25,17 @@ public class Robot {
 
     BNO055IMU imu;
 
+    OpMode opMode;
+
     HardwareMap hardwareMap;
 
     public enum Direction {
         LEFT, RIGHT
     }
 
-    public Robot(HardwareMap hardwareMap) {
+    public Robot(HardwareMap hardwareMap, OpMode opMode) {
         this.hardwareMap=hardwareMap;
+        this.opMode=opMode;
         init();
     }
 
@@ -55,9 +60,11 @@ public class Robot {
         conveyor = hardwareMap.get(DcMotor.class, "conveyor");
 
         bright.setDirection(DcMotorSimple.Direction.REVERSE);
-        fright.setDirection(DcMotorSimple.Direction.REVERSE);
+//        fright.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        shootR.setDirection(DcMotorSimple.Direction.REVERSE);
+        intake.setDirection(DcMotorSimple.Direction.REVERSE);
+        conveyor.setDirection(DcMotorSimple.Direction.REVERSE);
+        shootL.setDirection(DcMotorSimple.Direction.REVERSE);
 
     }
 
@@ -125,8 +132,10 @@ public class Robot {
         }
     }
 
-    final double MIN_TURN_SPEED = 0.1;
-    final int TURN_TIMEOUT = 5000;
+    public void turn(double speed) {
+        rightSide(-speed);
+        leftSide(speed);
+    }
 
     public void turn(int degrees, double speed) {
 
@@ -278,6 +287,76 @@ public class Robot {
     public double rightEncoder() {
         return fright.getCurrentPosition();
 //        return (bright.getCurrentPosition()+fright.getCurrentPosition())/2;
+    }
+
+    final double MIN_TURN_SPEED = 0.2;
+    final int TURN_TIMEOUT = 4000;
+    final static double MAX_TURN_DIFF = 2;
+
+    public void turnToAngle(double angle) {
+        long startTime = System.currentTimeMillis();
+
+        double initial = stripAngle(getHeading());
+        double target = stripAngle(angle);
+
+        double diff = target-initial;
+
+        opMode.telemetry.addData(("Head: " + getHeading() + " Diff: " + diff + " Target: " + target),null);
+        opMode.telemetry.update();
+
+        double speed = 0.0;
+
+        while(System.currentTimeMillis()<startTime+TURN_TIMEOUT &&  Math.abs(diff)>MAX_TURN_DIFF) {
+            opMode.telemetry.addData(("Head: " + getHeading() + " Diff: " + diff + " Target: " + target),null);
+            opMode.telemetry.update();
+            speed = 0.8*motorPowerFunction(diff);
+            turn(speed);
+            diff = target-stripAngle(getHeading());
+        }
+
+        turn(0);
+
+        waitMillis(100);
+
+        diff = target-stripAngle(getHeading());
+
+        while(System.currentTimeMillis()<startTime+TURN_TIMEOUT/2 && Math.abs(diff)>MAX_TURN_DIFF/2) {
+            opMode.telemetry.addData(("Head: " + getHeading() + " Diff: " + diff + " Target: " + target),null);
+            opMode.telemetry.update();
+            speed = 0.6*motorPowerFunction(diff);
+            turn(speed);
+            diff = target-stripAngle(getHeading());
+        }
+
+        turn(0);
+
+    }
+
+    // Custom function found on Desmos to control the power of the motors based off of the given angle
+    public double motorPowerFunction(double angle) {
+        if(angle>0) {
+            return Math.sqrt(angle/600)+0.2;
+        } else {
+            return -Math.sqrt(-angle/600)-0.2;
+        }
+    }
+
+    // Manipulates a given angle so that it is between 0º and 360º
+    public double stripAngle(double angle) {
+        if(angle>360) {
+            angle-=Math.floor(angle/360)*360;
+        } else if (angle<-360) {
+            angle+=(Math.floor(angle/360)*-360)-360;
+        }
+        return angle;
+    }
+
+    public void waitMillis(int millis) {
+        try {
+            Thread.sleep(millis);
+        } catch(InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 }

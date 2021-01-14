@@ -13,7 +13,7 @@ public class MotorTestAuto extends ExplosiveAuto {
 
     @Override
     protected void initialize() {
-        robot = new Robot(hardwareMap);
+        robot = new Robot(hardwareMap,this);
     }
 
     // Just a number to display on the telemetry to show somethings happening

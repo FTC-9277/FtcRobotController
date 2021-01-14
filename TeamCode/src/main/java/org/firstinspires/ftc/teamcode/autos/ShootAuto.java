@@ -17,15 +17,14 @@ public class ShootAuto extends ExplosiveAuto {
         robot.drive(1);
         waitMillis(625);
         robot.strafe(0.5, Robot.Direction.LEFT);
-        waitMillis(500);
+        waitMillis(1000);
         robot.stop();
 
-//        robot.turn(0.2, Robot.Direction.LEFT);
-        waitMillis(100);
+        waitMillis(250);
 
-        robot.stop();
+        robot.turnToAngle(0);
 
-        robot.shoot(-1);
+        robot.shoot(-0.7);
         waitMillis(2000);
 
         robot.conveyor(-1.0);
@@ -36,7 +35,7 @@ public class ShootAuto extends ExplosiveAuto {
         waitMillis(1000);
 
         robot.drive(0.5);
-        waitMillis(200);
+        waitMillis(400);
 
         robot.stop();
     }

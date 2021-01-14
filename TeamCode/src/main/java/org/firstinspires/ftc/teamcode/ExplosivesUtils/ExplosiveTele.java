@@ -23,7 +23,7 @@ public abstract class ExplosiveTele extends LinearOpMode {
         Populates the robot object.
      */
     private void createRobot() {
-        robot = new Robot(hardwareMap);
+        robot = new Robot(hardwareMap,this);
     }
 
     /*

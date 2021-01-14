@@ -12,22 +12,24 @@ public class FullTele extends ExplosiveTele {
 
     }
 
+    boolean locked = false;
+
     @Override
     protected void looping() {
 
         if(Math.abs(gamepad1.left_stick_y) > 0.2 || Math.abs(gamepad1.left_stick_x) > 0.2 || Math.abs(gamepad1.right_stick_x) > 0.2) {
-            robot.fright.setPower(0.6*((gamepad1.left_stick_y+gamepad1.left_stick_x) - gamepad1.right_stick_x));
-            robot.bright.setPower(0.6*((gamepad1.left_stick_y-gamepad1.left_stick_x) - gamepad1.right_stick_x));
-            robot.fleft.setPower(0.6*((gamepad1.left_stick_y-gamepad1.left_stick_x) + gamepad1.right_stick_x));
-            robot.bleft.setPower(0.6*((gamepad1.left_stick_y+gamepad1.left_stick_x) + gamepad1.right_stick_x));
+            robot.fright.setPower(0.6*((gamepad1.left_stick_y+gamepad1.left_stick_x) + gamepad1.right_stick_x));
+            robot.bright.setPower(0.6*((gamepad1.left_stick_y-gamepad1.left_stick_x) + gamepad1.right_stick_x));
+            robot.fleft.setPower(0.6*((gamepad1.left_stick_y-gamepad1.left_stick_x) - gamepad1.right_stick_x));
+            robot.bleft.setPower(0.6*((gamepad1.left_stick_y+gamepad1.left_stick_x) - gamepad1.right_stick_x));
         } else {
             robot.stop();
         }
 
         if(Math.abs(gamepad2.right_trigger)>0.2) {
-            robot.shoot(-gamepad2.right_trigger);
+            robot.shoot(-gamepad2.right_trigger*0.7);
         } else if(Math.abs(gamepad2.left_trigger)>0.2) {
-            robot.shoot(gamepad2.left_trigger);
+            robot.shoot(gamepad2.left_trigger*0.7);
         } else {
             robot.shoot(0);
         }
@@ -46,6 +48,13 @@ public class FullTele extends ExplosiveTele {
             robot.conveyor(1);
         } else {
             robot.conveyor(0);
+        }
+
+        if(gamepad1.a && !locked) {
+            locked=true;
+            robot.turnToAngle(0);
+        } else {
+            locked=false;
         }
 
     }

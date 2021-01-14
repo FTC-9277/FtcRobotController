@@ -8,8 +8,6 @@ import org.firstinspires.ftc.teamcode.ExplosivesUtils.Robot;
 @Autonomous(name = "Test Auto")
 public class TestAuto extends ExplosiveAuto {
 
-    Robot robot;
-
     @Override
     protected void initialize() {
 
@@ -17,12 +15,13 @@ public class TestAuto extends ExplosiveAuto {
 
     @Override
     protected void begin() throws InterruptedException {
-        robot.driveStraight(1.0,2500);
-        wait(1000);
-        robot.turn(90,1.0);
-        wait(1000);
-        robot.turn(-90,1.0);
-        wait(1000);
-        robot.driveStraight(-1.0,2500);
+//        waitMillis(1000);
+//        robot.turnToAngle(0);
+//        waitMillis(3000);
+        robot.turnToAngle(90);
+        waitMillis(3000);
+        log("Going next now");
+        waitMillis(3000);
+        robot.turnToAngle(0);
     }
 }
