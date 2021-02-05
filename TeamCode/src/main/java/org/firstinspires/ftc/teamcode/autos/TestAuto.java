@@ -15,13 +15,21 @@ public class TestAuto extends ExplosiveAuto {
 
     @Override
     protected void begin() throws InterruptedException {
-//        waitMillis(1000);
-//        robot.turnToAngle(0);
-//        waitMillis(3000);
+
+//        robot.leftSide(1.0);
+
+        waitMillis(200);
+        robot.stop();
+//
+//        robot.drive(0.8);
+//
+//        while(robot.leftEncoder()<1000 && robot.rightEncoder()<1000) {
+//
+//        }
+
         robot.turnToAngle(90);
-        waitMillis(3000);
-        log("Going next now");
-        waitMillis(3000);
-        robot.turnToAngle(0);
+
+        robot.stop();
+
     }
 }

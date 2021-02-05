@@ -14,29 +14,55 @@ public class ShootAuto extends ExplosiveAuto {
 
     @Override
     protected void begin() throws InterruptedException {
-        robot.drive(1);
-        waitMillis(625);
-        robot.strafe(0.5, Robot.Direction.LEFT);
-        waitMillis(1000);
+
+        robot.driveForwardEncoders(0.6,1100);
+
+        waitMillis(500);
+
+        robot.turnToAngle(90);
+
+        waitMillis(500);
+
+        robot.driveForwardEncoders(0.6,100);
         robot.stop();
 
-        waitMillis(250);
+        waitMillis(500);
 
         robot.turnToAngle(0);
 
-        robot.shoot(-0.7);
+        robot.shoot(1850);
         waitMillis(2000);
 
         robot.conveyor(-1.0);
         robot.intake();
-        waitMillis(3000);
+        waitMillis(5000);
 
         robot.stop();
         waitMillis(1000);
 
-        robot.drive(0.5);
-        waitMillis(400);
+        robot.stopIntake();
+        robot.conveyor(0);
+        robot.shoot(0);
+
+        waitMillis(250);
+
+        robot.driveForwardEncoders(0.6,250);
+
+        robot.turnToAngle(180);
+
+        waitMillis(500);
+
+        robot.dropWobbler();
+        waitMillis(1000);
+
+        robot.openGrabber();
+        waitMillis(500);
+
+        robot.liftWobbler();
+        waitMillis(500);
+        robot.closeGrabber();
 
         robot.stop();
+
     }
 }

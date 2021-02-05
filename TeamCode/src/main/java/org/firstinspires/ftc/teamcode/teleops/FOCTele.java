@@ -46,13 +46,13 @@ public class FOCTele extends ExplosiveTele {
             robot.stop();
         }
 
-        if(Math.abs(gamepad2.right_trigger)>0.2) {
-            robot.shoot(-gamepad2.right_trigger);
-        } else if(Math.abs(gamepad2.left_trigger)>0.2) {
-            robot.shoot(gamepad2.left_trigger);
-        } else {
-            robot.shoot(0);
-        }
+//        if(Math.abs(gamepad2.right_trigger)>0.2) {
+//            robot.shoot(-gamepad2.right_trigger);
+//        } else if(Math.abs(gamepad2.left_trigger)>0.2) {
+//            robot.shoot(gamepad2.left_trigger);
+//        } else {
+//            robot.shoot(0);
+//        }
 
         if(gamepad2.a) {
             robot.intake();
