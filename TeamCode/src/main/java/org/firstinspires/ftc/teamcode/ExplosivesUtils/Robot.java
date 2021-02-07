@@ -94,6 +94,7 @@ public class Robot {
 
 //        wobbler.setPosition(0.0);
         closeGrabber();
+        liftWobbler();
 
     }
 
@@ -159,11 +160,11 @@ public class Robot {
     }
 
     public void dropWobbler() {
-        wobbler.setPosition(0.805);
+        wobbler.setPosition(0.863);
     }
 
     public void liftWobbler() {
-        wobbler.setPosition(0.258);
+        wobbler.setPosition(0.31);
     }
 
     public void middleWobbler() {

@@ -23,7 +23,7 @@ public class ShootAuto extends ExplosiveAuto {
 
         waitMillis(500);
 
-        robot.driveForwardEncoders(0.6,100);
+        robot.driveForwardEncoders(0.6,150);
         robot.stop();
 
         waitMillis(500);
@@ -46,9 +46,16 @@ public class ShootAuto extends ExplosiveAuto {
 
         waitMillis(250);
 
-        robot.driveForwardEncoders(0.6,250);
+        robot.driveForwardEncoders(0.6,300);
 
         robot.turnToAngle(180);
+
+        waitMillis(500);
+
+        robot.turn(0.3, Robot.Direction.LEFT);
+        waitMillis(250);
+
+        robot.stop();
 
         waitMillis(500);
 

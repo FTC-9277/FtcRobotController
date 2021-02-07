@@ -127,6 +127,7 @@ public class FullTele extends ExplosiveTele {
 
         if(gamepad2.right_bumper && !wobblerLock) {
             wobblerLock=true;
+            robot.stop();
             robot.satisfyingWobblerDrop();
         } else {
             wobblerLock=false;
