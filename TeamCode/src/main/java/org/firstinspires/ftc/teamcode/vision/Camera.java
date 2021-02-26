@@ -80,6 +80,7 @@ public class Camera {
     public Bitmap imgToBitmap(Image image){
         Bitmap img = Bitmap.createBitmap(image.getWidth(), image.getHeight(), Bitmap.Config.RGB_565);
         img.copyPixelsFromBuffer(image.getPixels());
+        img = Bitmap.createBitmap(img,450,0,250,img.getHeight());
         return img;
     }
 

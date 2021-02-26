@@ -27,7 +27,7 @@ public class TestAuto extends ExplosiveAuto {
 //
 //        }
 
-        robot.turnToAngle(90);
+        robot.turnToAngle(180);
 
         robot.stop();
 

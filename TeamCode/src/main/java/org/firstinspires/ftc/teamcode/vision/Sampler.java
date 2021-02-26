@@ -28,6 +28,8 @@ public class Sampler {
         this.camera=camera;
     }
 
+    public final int TERMINATE_LIMIT=15;
+
     public double[] sample() {
 
         System.out.println(System.currentTimeMillis());
@@ -50,7 +52,7 @@ public class Sampler {
         int xCount=0;
 
         // The maximum number of pixels is 1/5 of the image's width
-        while(terminateCount<5 && xCount<=(width/5)) {
+        while(terminateCount<TERMINATE_LIMIT && xCount<=(width/5)) {
             xCount+=1;
             if(!isCoordYellow((int)Math.round(center.x())+xCount,(int)Math.round(center.y()),rgb,width,height)) {
                 // If the given pixel is not yellow, add one to the terminate count
@@ -73,14 +75,14 @@ public class Sampler {
         // Now calculate this but for the y, twice. Once for positive y, once for negative y
 
 
-        // This count represents the number of non-yellow pixels found in the search. If this number gets to be 5 or more, the search will terminate and assume that all the yellow pixels have been found
+        // This count represents the number of non-yellow pixels found in the search. If this number gets to be TERMINATE_LIMIT or more, the search will terminate and assume that all the yellow pixels have been found
         terminateCount=0;
 
         // This count is how many pixels in the positive y direction the code has searched so far. It will increase by 1 every loop
         int yCount=0;
 
         // The maximum number of pixels is 1/5 of the image's height
-        while(terminateCount<5 && yCount<=(height/5)) {
+        while(terminateCount<TERMINATE_LIMIT && yCount<=(height/5)) {
             yCount+=1;
             if(!isCoordYellow((int)Math.round(center.x()),(int)Math.round(center.y()+yCount),rgb,width,height)) {
                 // If the given pixel is not yellow, add one to the terminate count
@@ -99,14 +101,14 @@ public class Sampler {
 
         int totalHeightUp = (yCount*2)+1;
 
-        // This count represents the number of non-yellow pixels found in the search. If this number gets to be 5 or more, the search will terminate and assume that all the yellow pixels have been found
+        // This count represents the number of non-yellow pixels found in the search. If this number gets to be TERMINATE_LIMIT or more, the search will terminate and assume that all the yellow pixels have been found
         terminateCount=0;
 
         // This count is how many pixels in the NEGATIVE y direction the code has searched so far. It will increase by 1 every loop
         yCount=0;
 
         // The maximum number of pixels is 1/5 of the image's height
-        while(terminateCount<5 && yCount<=(height/5)) {
+        while(terminateCount<TERMINATE_LIMIT && yCount<=(height/5)) {
             yCount-=1;
             if(!isCoordYellow((int)Math.round(center.x()),(int)Math.round(center.y()+yCount),rgb,width,height)) {
                 // If the given pixel is not yellow, add one to the terminate count
@@ -135,14 +137,22 @@ public class Sampler {
 
         double[] arr = new double[8];
 
-        if (totalWidth <= 5 || (totalHeightDown <= 5 && totalHeightUp <= 5)) {
-            arr[0] = 0;
-        } else if ((totalHeightUp <= totalWidth*0.3) || totalHeightDown <= totalWidth*0.3) {
-            arr[0] = 1;
-        } else if (totalHeightUp > totalWidth*0.3 || totalHeightDown > totalWidth*0.3) {
-            arr[0] = 4;
+//        if (totalWidth <= 5 || (totalHeightDown <= 5 && totalHeightUp <= 5)) {
+//            arr[0] = 0;
+//        } else if ((totalHeightUp <= totalWidth*0.3) || totalHeightDown <= totalWidth*0.3) {
+//            arr[0] = 1;
+//        } else if (totalHeightUp > totalWidth*0.3 || totalHeightDown > totalWidth*0.3) {
+//            arr[0] = 4;
+//        } else {
+//            arr[0] = 0;
+//        }
+
+        if(totalHeightUp+totalHeightDown>=200) {
+            arr[0]=4;
+        } else if(totalHeightUp+totalHeightDown>=85) {
+            arr[0]=1;
         } else {
-            arr[0] = 0;
+            arr[0]=0;
         }
 
         arr[1] = totalWidth;
@@ -186,7 +196,7 @@ public class Sampler {
     static boolean isYellow(int c) {
 //        return (getRed(c) >= 130) && (getGreen(c) >= 45 && getGreen(c) <= 170) && (getBlue(c) <= 120);
         //61, 159, 217, 231, 3, 220
-        return (getRed(c) >= 100 && getRed(c) <= 255) && (getGreen(c) >= 0 && getGreen(c) <= 240) && (getBlue(c) >= 0 && getBlue(c) <= 30);
+        return (getRed(c) >= 100 && getRed(c) <= 255) && (getGreen(c) >= 0 && getGreen(c) <= 240) && (getBlue(c) >= 0 && getBlue(c) <= 70);
     }
 
 

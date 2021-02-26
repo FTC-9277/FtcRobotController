@@ -5,8 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.teamcode.ExplosivesUtils.ExplosiveAuto;
 import org.firstinspires.ftc.teamcode.ExplosivesUtils.Robot;
 
-@Autonomous(name = "Shoot")
-public class ShootAuto extends ExplosiveAuto {
+@Autonomous(name = "DoubleWobbler")
+public class DoubleWobbler extends ExplosiveAuto {
     @Override
     protected void initialize() {
 
@@ -15,18 +15,18 @@ public class ShootAuto extends ExplosiveAuto {
     @Override
     protected void begin() throws InterruptedException {
 
-        robot.driveForwardEncoders(0.6,1100);
+        robot.driveForwardEncoders(1.0,1100);
 
-        waitMillis(500);
+        waitMillis(250);
 
         robot.turnToAngle(90);
 
-        waitMillis(500);
+        waitMillis(250);
 
         robot.driveForwardEncoders(0.6,150);
         robot.stop();
 
-        waitMillis(500);
+        waitMillis(250);
 
         robot.turnToAngle(0);
 
@@ -35,10 +35,10 @@ public class ShootAuto extends ExplosiveAuto {
 
         robot.conveyor(-1.0);
         robot.intake();
-        waitMillis(5000);
+        waitMillis(3000);
 
         robot.stop();
-        waitMillis(1000);
+        waitMillis(250);
 
         robot.stopIntake();
         robot.conveyor(0);
@@ -46,18 +46,18 @@ public class ShootAuto extends ExplosiveAuto {
 
         waitMillis(250);
 
-        robot.driveForwardEncoders(0.6,300);
+        robot.driveForwardEncoders(1.0,300);
 
         robot.turnToAngle(180);
 
-        waitMillis(500);
+        waitMillis(250);
 
         robot.turn(0.3, Robot.Direction.LEFT);
         waitMillis(250);
 
         robot.stop();
 
-        waitMillis(500);
+        waitMillis(250);
 
         robot.dropWobbler();
         waitMillis(1000);
@@ -70,6 +70,15 @@ public class ShootAuto extends ExplosiveAuto {
         robot.closeGrabber();
 
         robot.stop();
+
+        robot.turnToAngle(5);
+
+        waitMillis(250);
+
+        robot.driveBackwardEncoders(1.0,1000);
+
+        waitMillis(500);
+
 
     }
 }

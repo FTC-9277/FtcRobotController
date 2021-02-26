@@ -23,31 +23,21 @@ public class FullTele extends ExplosiveTele {
     protected void looping() {
 
         if(Math.abs(gamepad1.left_stick_y) > 0.2 || Math.abs(gamepad1.left_stick_x) > 0.2 || Math.abs(gamepad1.right_stick_x) > 0.2) {
-            robot.fright.setPower(0.6*((gamepad1.left_stick_y+gamepad1.left_stick_x) + gamepad1.right_stick_x));
-            robot.bright.setPower(0.6*((gamepad1.left_stick_y-gamepad1.left_stick_x) + gamepad1.right_stick_x));
-            robot.fleft.setPower(0.6*((gamepad1.left_stick_y-gamepad1.left_stick_x) - gamepad1.right_stick_x));
-            robot.bleft.setPower(0.6*((gamepad1.left_stick_y+gamepad1.left_stick_x) - gamepad1.right_stick_x));
+            robot.fright(0.6*((gamepad1.left_stick_y+gamepad1.left_stick_x) + gamepad1.right_stick_x));
+            robot.bright(0.6*((gamepad1.left_stick_y-gamepad1.left_stick_x) + gamepad1.right_stick_x));
+            robot.fleft(0.6*((gamepad1.left_stick_y-gamepad1.left_stick_x) - gamepad1.right_stick_x));
+            robot.bleft(0.6*((gamepad1.left_stick_y+gamepad1.left_stick_x) - gamepad1.right_stick_x));
+
         } else {
             robot.stop();
         }
 
         if(Math.abs(gamepad2.right_trigger)>0.2) {
-            robot.shootL.setVelocity(-1950);
-            robot.shootR.setVelocity(-1850);
-            telemetry.addLine("Lvelocity: " + robot.shootL.getVelocity());
-            telemetry.addLine("Rvelocity: " + robot.shootR.getVelocity());
-            telemetry.update();
+            robot.shoot(Robot.ShooterSpeed.FULL_FORWARD);
         } else if(Math.abs(gamepad2.left_trigger)>0.2) {
-            robot.shootL.setVelocity(2000);
-            robot.shootR.setVelocity(2000);
-            telemetry.addLine("Lvelocity: " + robot.shootL.getVelocity());
-            telemetry.addLine("Rvelocity: " + robot.shootR.getVelocity());
-            telemetry.update();
+            robot.shoot(Robot.ShooterSpeed.FULL_BACKWARD);
         } else {
-//            robot.shootL.setVelocity(-robot.shootL.getVelocity()/8);
-//            robot.shootR.setVelocity(-robot.shootR.getVelocity()/8);
-            robot.shootL.setVelocity(0);
-            robot.shootR.setVelocity(0);
+            robot.shoot(Robot.ShooterSpeed.STOP);
         }
 
         if(gamepad2.a) {
@@ -66,26 +56,26 @@ public class FullTele extends ExplosiveTele {
             robot.conveyor(0);
         }
 
-        if(gamepad1.y && !locked) {
-            locked=true;
-            robot.turnToAngle(CENTER_PSHOT);
-        } else {
-            locked=false;
-        }
-
-        if(gamepad1.b && !locked) {
-            locked=true;
-            robot.turnToAngle(RIGHT_PSHOT);
-        } else {
-            locked=false;
-        }
-
-        if(gamepad1.x && !locked) {
-            locked=true;
-            robot.turnToAngle(LEFT_PSHOT);
-        } else {
-            locked=false;
-        }
+//        if(gamepad1.y && !locked) {
+//            locked=true;
+//            robot.turnToAngle(CENTER_PSHOT);
+//        } else {
+//            locked=false;
+//        }
+//
+//        if(gamepad1.b && !locked) {
+//            locked=true;
+//            robot.turnToAngle(RIGHT_PSHOT);
+//        } else {
+//            locked=false;
+//        }
+//
+//        if(gamepad1.x && !locked) {
+//            locked=true;
+//            robot.turnToAngle(LEFT_PSHOT);
+//        } else {
+//            locked=false;
+//        }
 
         if(gamepad1.a && !locked) {
             locked=true;

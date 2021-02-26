@@ -30,5 +30,6 @@ public class VisionAuto extends ExplosiveAuto {
         log("sampling");
         double[] value = sampler.sample();
         log(("Sample: " + value[0] + ", TotalW: " + value[1] + ", HeightUp: " + value[2] + ", HeightDown: " + value[3] + ", W: " + value[4] + ", H: " + value[5] + ", center: (" + value[6] + "," + value[7] + ")"));
+        waitMillis(10000);
     }
 }
